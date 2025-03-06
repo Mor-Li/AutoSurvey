@@ -28,27 +28,41 @@ class outlineWriter():
         self.input_token_usage, self.output_token_usage = 0, 0
 
     def draft_outline(self, topic, reference_num = 600, chunk_size = 30000, section_num = 6):
+        print(f"Starting outline drafting for topic: {topic}")
         # Get database
+        print(f"Retrieving {reference_num} references from database...")
         references_ids = self.db.get_ids_from_query(topic, num = reference_num, shuffle = True)
         references_infos = self.db.get_paper_info_from_ids(references_ids)
+        print(f"Retrieved {len(references_infos)} reference papers")
 
         references_titles = [r['title'] for r in references_infos]
         references_abs = [r['abs'] for r in references_infos]
+        print("Chunking references...")
         abs_chunks, titles_chunks = self.chunking(references_abs, references_titles, chunk_size=chunk_size)
+        print(f"Created {len(abs_chunks)} chunks")
 
         # generate rough section-level outline
+        print("Generating rough section-level outlines...")
         outlines = self.generate_rough_outlines(topic=topic, papers_chunks = abs_chunks, titles_chunks = titles_chunks, section_num=section_num)
+        print(f"Generated {len(outlines)} rough outlines")
         
         # merge outline
+        print("Merging outlines...")
         section_outline = self.merge_outlines(topic=topic, outlines=outlines)
+        print("Section outline merged successfully")
 
         # generate subsection-level outline
+        print("Generating subsection-level outlines...")
         subsection_outlines = self.generate_subsection_outlines(topic=topic, section_outline= section_outline,rag_num= 50)
+        print("Subsection outlines generated")
         
+        print("Processing and combining outlines...")
         merged_outline = self.process_outlines(section_outline, subsection_outlines)
         
         # edit final outline
+        print("Editing final outline...")
         final_outline = self.edit_final_outline(merged_outline)
+        print("Outline drafting completed")
 
         return final_outline
 
