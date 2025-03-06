@@ -7,7 +7,7 @@ import time
 import requests
 import random
 import json
-from langchain.document_loaders import PyPDFLoader
+from langchain_community.document_loaders import PyPDFLoader
 
 class tokenCounter():
 
@@ -21,7 +21,9 @@ class tokenCounter():
     def num_tokens_from_list_string(self, list_of_string:List[str]) -> int:
         num = 0
         for s in list_of_string:
-            num += len(self.encoding.encode(s))
+            if s is None:
+                continue
+            num += len(self.encoding.encode(str(s)))
         return num
     
     def compute_price(self, input_tokens, output_tokens, model):

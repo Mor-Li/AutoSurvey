@@ -11,7 +11,13 @@ from src.prompt import ROUGH_OUTLINE_PROMPT, MERGING_OUTLINE_PROMPT, SUBSECTION_
 from transformers import AutoModel, AutoTokenizer,  AutoModelForSequenceClassification
 
 class outlineWriter():
-    
+    # 禁用所有可能的代理
+    os.environ['http_proxy'] = ''
+    os.environ['https_proxy'] = ''
+    os.environ['HTTP_PROXY'] = ''
+    os.environ['HTTPS_PROXY'] = ''
+    # os.environ['no_proxy'] = '152.69.226.145'
+    # os.environ['NO_PROXY'] = '152.69.226.145'
     def __init__(self, model:str, api_key:str, api_url:str, database) -> None:
         
         self.model, self.api_key, self.api_url = model, api_key, api_url 

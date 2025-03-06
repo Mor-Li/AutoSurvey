@@ -29,7 +29,12 @@ def write(topic, model, section_num, subsection_len, rag_num, refinement):
 
 def write_outline(topic, model, section_num, outline_reference_num, db, api_key, api_url):
     outline_writer = outlineWriter(model=model, api_key=api_key, api_url = api_url, database=db)
-    print(outline_writer.api_model.chat('hello'))
+    print(f"Using API URL: {api_url}")
+    print(f"First test response:")
+    api_model = outline_writer.api_model
+    # print every thing of api_model
+    print(api_model.__dict__)
+    api_model.chat("test")  # 在正式开始前测试连接
     outline = outline_writer.draft_outline(topic, outline_reference_num, 30000, section_num)
     return outline, remove_descriptions(outline)
 
@@ -61,7 +66,11 @@ def paras_args():
     return args
 
 def main(args):
-
+    print("Args received in main():")
+    print(f"model: {args.model}")
+    print(f"api_key: {args.api_key}")
+    print(f"api_url: {args.api_url}")
+    
     db = database(db_path = args.db_path, embedding_model = args.embedding_model)
     
     api_key = args.api_key

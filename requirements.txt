@@ -9,5 +9,8 @@ sentence_transformers==2.7.0
 tiktoken==0.7.0
 tinydb==4.8.0
 torch==2.1.0
+# pip install torch==2.1.0 torchvision==0.16.0 torchaudio==2.1.0 --index-url https://download.pytorch.org/whl/cu118
+
 tqdm==4.66.4
 transformers==4.35.1
+megablocks
