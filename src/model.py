@@ -54,8 +54,8 @@ class APIModel:
         # 移除多余空白并转为小写
         normalized = re.sub(r'\s+', ' ', text).strip().lower()
         # 打印用于调试
-        print(f"原始文本: '{text}'")
-        print(f"标准化后: '{normalized}'")
+        # print(f"原始文本: '{text}'")
+        # print(f"标准化后: '{normalized}'")
         return normalized
     
     def _get_text_hash(self, text):
@@ -63,7 +63,7 @@ class APIModel:
         # 标准化后再计算哈希,确保空白差异不影响缓存
         normalized_text = self._normalize_text(text)
         hash_value = hashlib.md5(normalized_text.encode('utf-8')).hexdigest()
-        print(f"生成的哈希值: {hash_value}")
+        # print(f"生成的哈希值: {hash_value}")
         return hash_value
         
     def __req(self, text, temperature, max_try = 5):
