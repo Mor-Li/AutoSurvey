@@ -11,7 +11,7 @@ python main.py --topic "LLMs for education" \
                --embedding_model nomic-ai/nomic-embed-text-v1 \
                --model gpt-4o \
                --api_url http://152.69.226.145:3000/v1/chat/completions \
-               --api_key sk-tgbw1GiczJSMbdkPB40a2aA0E63c4f3fBb564c5b73799971
+               --api_key sk-FQoAQv3CvhQEOPai4dBaBe7024C848D194F3B8110dE24eAf
 
 
 # run evaluation
@@ -22,7 +22,7 @@ python evaluation.py --topic "LLMs for education" \
                --db_path ./database \
                --embedding_model nomic-ai/nomic-embed-text-v1 \
                --api_url http://152.69.226.145:3000/v1/chat/completions \
-               --api_key sk-I6AFhSv1Qodu8FBx15126145600f4220A7D4Cc69Ef4810F7 
+               --api_key sk-FQoAQv3CvhQEOPai4dBaBe7024C848D194F3B8110dE24eAf
                
 # unzip database
 unzip database.zip -d ./database/

@@ -42,8 +42,9 @@ def evaluate(args):
     survey, references = read_survey(args.saving_path, args.topic)
 
     criterion = ['Coverage', 'Structure', 'Relevance']
-
+    # 同时对三个指标进行评估
     scores = judge.batch_criteria_based_judging(survey, args.topic, criterion)
+
 
     recall, precision = judge.citation_quality(survey, references)
 

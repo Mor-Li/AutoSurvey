@@ -39,7 +39,7 @@ def write_outline(topic, model, section_num, outline_reference_num, db, api_key,
     return outline, remove_descriptions(outline)
 
 def write_subsection(topic, model, outline, subsection_len, rag_num, db, api_key, api_url, refinement = True):
-
+    # 默认refinement=True
     subsection_writer = subsectionWriter(model=model, api_key=api_key, api_url = api_url, database=db)
     if refinement:
         raw_survey, raw_survey_with_references, raw_references, refined_survey, refined_survey_with_references, refined_references = subsection_writer.write(topic, outline, subsection_len = subsection_len, rag_num = rag_num, refining = True)
@@ -81,6 +81,7 @@ def main(args):
     outline_with_description, outline_wo_description = write_outline(args.topic, args.model, args.section_num, args.outline_reference_num, db, args.api_key, args.api_url)
 
     raw_survey, raw_survey_with_references, raw_references, refined_survey, refined_survey_with_references, refined_references = write_subsection(args.topic, args.model, outline_with_description, args.subsection_len, args.rag_num, db, args.api_key, args.api_url)
+    # 这里根本没有传refinement参数，所以默认到了write_subsection里初始化就是refinement=True
 
     with open(f'{args.saving_path}/{args.topic}.md', 'a+') as f:
         f.write(refined_survey_with_references)
