@@ -198,6 +198,42 @@ Do not change any other things except the citations!!!
 Only return the subsection with correct citations:
 '''
 
+CHECK_CITATION_PROMPT_CN = '''
+您是一位人工智能专家，想要撰写一篇关于[TOPIC]的全面综述。\n\
+以下是参考文献列表：
+---
+[PAPER LIST]
+---
+您已撰写了以下小节：\n\
+---
+[SUBSECTION]
+---
+<instruction>
+基于上述特定论文的句子后面应附有“paper_title”的引用，格式为“[]”。
+例如，“大型语言模型（LLMs）的出现[Language models are few-shot learners; Language models are unsupervised multitask learners; PaLM: Scaling language modeling with pathways]”
+
+以下是关于何时在综述中引用论文的简明指南：
+---
+1. 总结研究：在总结现有文献时引用来源。
+2. 使用特定概念或数据：在讨论特定理论、模型或数据时提供引用。
+3. 比较研究结果：在比较或对比不同研究结果时引用相关研究。
+4. 突出研究空白：在指出您的综述所解决的空白时引用先前的研究。
+5. 使用已建立的方法：引用您在综述中使用的方法的创建者。
+6. 支持论点：引用支持您结论和论点的来源。
+7. 建议未来研究：参考与建议的未来研究方向相关的研究。
+---
+
+现在您需要检查此小节中“paper_title”的引用是否正确。
+正确的引用意味着相应论文的内容可以支持您所写的句子。
+一旦引用不能支持您所写的句子，请更正“[]”中的paper_title或直接删除。
+
+请记住，您只能引用上面提供的“paper_title”!!!
+不允许引用作者等其他信息!!!
+除了引用外，不要更改任何其他内容!!!
+</instruction>
+仅返回具有正确引用的小节：
+'''
+
 SUBSECTION_WRITING_PROMPT = '''
 You are an expert in artificial intelligence who wants to write a overall and comprehensive survey about [TOPIC].\n\
 You have created a overall outline below:\n\
@@ -244,6 +280,52 @@ Return the content of subsection "[SUBSECTION NAME]" in the format:
 Only return the content more than [WORD NUM] words you write for the subsection [SUBSECTION NAME] without any other information:
 '''
 
+SUBSECTION_WRITING_PROMPT_CN = '''
+您是一位人工智能专家，想要撰写一篇关于[TOPIC]的全面综述。\n\
+您已创建了一个总体大纲如下：\n\
+---
+[OVERALL OUTLINE]
+---
+以下是参考文献列表：
+---
+[PAPER LIST]
+---
+
+<instruction>
+现在您需要为小节撰写内容：
+"[SUBSECTION NAME]"，位于章节："[SECTION NAME]"下
+关于这个名为[SUBSECTION NAME]的小节的写作细节在此描述中：
+---
+[DESCRIPTION]
+---
+
+您必须遵循以下要求：
+1. 您撰写的内容必须超过[WORD NUM]字。
+2. 在撰写基于上述特定论文的句子时，您需要在'[]'格式中引用"paper_title"以支持您的内容。引用示例：'the emergence of large language models (LLMs) [Language models are few-shot learners; PaLM: Scaling language modeling with pathways]'
+    请注意，"paper_title"不允许在没有'[]'格式的情况下出现。一旦提到'paper_title'，它必须包含在'[]'中。不允许引用上面不存在的论文！
+    请记住，您只能引用上面提供的论文，并且只能引用"paper_title"！
+3. 只有当论文的主要部分支持您的主张时，您才引用它。
+
+
+以下是撰写综述时引用论文的简明指南：
+---
+1. 总结研究：在总结现有文献时引用来源。
+2. 使用特定概念或数据：在讨论特定理论、模型或数据时提供引用。
+3. 比较研究结果：在比较或对比不同研究结果时引用相关研究。
+4. 突出研究空白：在指出您的综述所解决的空白时引用先前的研究。
+5. 使用已建立的方法：引用您在综述中使用的方法的创建者。
+6. 支持论点：引用支持您的结论和论点的来源。
+7. 建议未来研究：参考与建议的未来研究方向相关的研究。
+---
+
+</instruction>
+以以下格式返回小节"[SUBSECTION NAME]"的内容：
+<format>
+[CONTENT OF SUBSECTION]
+</format>
+仅返回您为小节[SUBSECTION NAME]撰写的超过[WORD NUM]字的内容，不包含任何其他信息：
+'''
+
 
 LCE_PROMPT = '''
 You are an expert in artificial intelligence who wants to write a overall and comprehensive survey about [TOPIC].
@@ -278,4 +360,38 @@ Remember that keep all the essence and core information of the subsection intact
 Only return the whole refined content of the subsection without any other informations (like "Here is the refined subsection:")!
 
 The subsection content:
+'''
+
+LCE_PROMPT_CN = '''
+您是一位人工智能专家，想要撰写一篇关于[TOPIC]的全面综述。
+
+现在，您需要帮助改进其中一个小节，以提高您的综述的连贯性。
+
+您将获得该小节的内容以及前后小节的内容。
+
+前一小节：
+---
+[PREVIOUS]
+---
+
+后一小节：
+---
+[FOLLOWING]
+---
+
+需要改进的小节：
+---
+[SUBSECTION]
+---
+
+如果前一小节的内容为空，这意味着需要改进的小节是第一小节。
+如果后一小节的内容为空，这意味着需要改进的小节是最后一小节。
+
+现在，请改进该小节以增强连贯性，并确保该小节的内容与前后小节更顺畅地衔接。
+
+请记住，保持小节的所有精髓和核心信息不变。不要修改句子后面的[]中的任何引用。
+
+仅返回整个改进后的小节内容，不包含任何其他信息（例如“这是改进后的小节：”）！
+
+小节内容：
 '''
